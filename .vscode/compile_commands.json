@@ -1,0 +1,21 @@
+[
+{
+  "directory": "/home/hepcl/workspace/cvcls",
+  "arguments": ["/usr/bin/g++", "-c", "-m64", "-fvisibility=hidden", "-fvisibility-inlines-hidden", "-O3", "-isystem", "/usr/include/opencv4", "-isystem", "/home/hepcl/.xmake/packages/f/ffmpeg/7.1/71222cd958e14afd9bf3527dac8660dc/include", "-isystem", "/home/hepcl/.xmake/packages/l/libdrm/2.4.125/0aeb1c47f06940c381f74d47de14b458/include", "-isystem", "/home/hepcl/.xmake/packages/l/libdrm/2.4.125/0aeb1c47f06940c381f74d47de14b458/include/libdrm", "-DNDEBUG", "-o", "build/.objs/chapt3/linux/x86_64/release/src/main_chapt3.cpp.o", "src/main_chapt3.cpp"],
+  "file": "src/main_chapt3.cpp"
+},
+{
+  "directory": "/home/hepcl/workspace/cvcls",
+  "arguments": ["/usr/bin/g++", "-c", "-m64", "-fvisibility=hidden", "-fvisibility-inlines-hidden", "-O3", "-isystem", "/usr/include/opencv4", "-isystem", "/home/hepcl/.xmake/packages/f/ffmpeg/7.1/71222cd958e14afd9bf3527dac8660dc/include", "-isystem", "/home/hepcl/.xmake/packages/l/libdrm/2.4.125/0aeb1c47f06940c381f74d47de14b458/include", "-isystem", "/home/hepcl/.xmake/packages/l/libdrm/2.4.125/0aeb1c47f06940c381f74d47de14b458/include/libdrm", "-DNDEBUG", "-o", "build/.objs/chapt2/linux/x86_64/release/src/main_chapt2.cpp.o", "src/main_chapt2.cpp"],
+  "file": "src/main_chapt2.cpp"
+},
+{
+  "directory": "/home/hepcl/workspace/cvcls",
+  "arguments": ["/usr/bin/g++", "-c", "-m64", "-fvisibility=hidden", "-fvisibility-inlines-hidden", "-O3", "-isystem", "/usr/include/opencv4", "-isystem", "/home/hepcl/.xmake/packages/f/ffmpeg/7.1/71222cd958e14afd9bf3527dac8660dc/include", "-isystem", "/home/hepcl/.xmake/packages/l/libdrm/2.4.125/0aeb1c47f06940c381f74d47de14b458/include", "-isystem", "/home/hepcl/.xmake/packages/l/libdrm/2.4.125/0aeb1c47f06940c381f74d47de14b458/include/libdrm", "-DNDEBUG", "-o", "build/.objs/chapt5/linux/x86_64/release/src/main_chapt5.cpp.o", "src/main_chapt5.cpp"],
+  "file": "src/main_chapt5.cpp"
+},
+{
+  "directory": "/home/hepcl/workspace/cvcls",
+  "arguments": ["/usr/bin/g++", "-c", "-m64", "-fvisibility=hidden", "-fvisibility-inlines-hidden", "-O3", "-isystem", "/usr/include/opencv4", "-isystem", "/home/hepcl/.xmake/packages/f/ffmpeg/7.1/71222cd958e14afd9bf3527dac8660dc/include", "-isystem", "/home/hepcl/.xmake/packages/l/libdrm/2.4.125/0aeb1c47f06940c381f74d47de14b458/include", "-isystem", "/home/hepcl/.xmake/packages/l/libdrm/2.4.125/0aeb1c47f06940c381f74d47de14b458/include/libdrm", "-DNDEBUG", "-o", "build/.objs/chapt4/linux/x86_64/release/src/main_chapt4.cpp.o", "src/main_chapt4.cpp"],
+  "file": "src/main_chapt4.cpp"
+}]
