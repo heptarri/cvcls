@@ -11,5 +11,6 @@ output/
 
 # MacOS Cache
 .DS_Store
+.idea/
 
 
