@@ -2,36 +2,37 @@
 
 Assignment code for the Image Processing and Machine Vision course, Department of Robotics Engineering, Chang'an University.
 
-## Architecture
+## Source architecture
 
 ```
-src/
-├── main.cpp         
-├── common/          
-│   ├── common.h
-│   └── common.cpp
-└── chapts/
-    ├── chapt2/      
-    │   ├── chapt2.h
-    │   ├── chapt2.cpp
-    │   └── main.cpp
-    ├── chapt3/    
-    │   ├── chapt3.h
-    │   ├── chapt3.cpp
-    │   └── main.cpp
-    ├── chapt4/    
-    │   ├── chapt4.h
-    │   ├── chapt4.cpp
-    │   └── main.cpp
-    └── chapt5/    
-        ├── chapt5.h
-        ├── chapt5.cpp
-        └── main.cpp
+.
+├── chapts
+│   ├── chapt2
+│   │   ├── chapt2.cpp
+│   │   └── chapt2.h
+│   ├── chapt3
+│   │   ├── chapt3.cpp
+│   │   └── chapt3.h
+│   ├── chapt4
+│   │   ├── chapt4.cpp
+│   │   └── chapt4.h
+│   ├── chapt5
+│   │   ├── chapt5.cpp
+│   │   └── chapt5.h
+│   └── others
+│       ├── single_measure.cpp
+│       ├── single_measure.h
+│       ├── stereo_measure.cpp
+│       └── stereo_measure.h
+├── common
+│   ├── common.cpp
+│   └── common.h
+└── main.cpp
 ```
 
 ## Usage
 
-### REquirements
+### Requirements
 
 - CMake >= 3.10
 - C++23 (G++ 14)
@@ -40,18 +41,8 @@ src/
 ### Build
 
 ```bash
-mkdir build && cd build
-
-cmake ..
-
-make cvcls
-
-make
-
-make chapt2
-make chapt3
-make chapt4
-make chapt5
+cmake -S . -B build
+cmake --build build
 ```
 
 ### Running
@@ -68,6 +59,10 @@ cd build/bin
 ./cvcls 3    
 ./cvcls 4    
 ./cvcls 5    
+./cvcls measure
+./cvcls stereo
 
 ./cvcls --help
 ```
+
+> Path of images should be changed to your real address.

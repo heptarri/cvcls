@@ -65,29 +65,19 @@ cv::Mat imgFilter(const cv::Mat& src, const Kernel<H, W>& mask) {
   return dst;
 }
 
-// 旧版本兼容性：接受 C 数组的重载
-template <int H, int W>
-cv::Mat imgFilter(const cv::Mat& src, const float (&mask)[H][W]) {
-  Kernel<H, W> kernel;
-  for (int i : views::iota(0, H)) {
-    for (int j : views::iota(0, W)) {
-      kernel[i][j] = mask[i][j];
-    }
-  }
-  return imgFilter<H, W>(src, kernel);
-}
-
 // 均值平滑
 cv::Mat imgMean(const cv::Mat& src) {
-  constexpr Kernel<3, 3> kernel = {
+  constexpr std::array<std::array<float, 3>, 3> kernel = {
       {{1.0f, 1.0f, 1.0f}, {1.0f, 1.0f, 1.0f}, {1.0f, 1.0f, 1.0f}}};
+
   return imgFilter<3, 3>(src, kernel);
 }
 
 // 高斯平滑
 cv::Mat imgGaussian(const cv::Mat& src) {
-  constexpr Kernel<3, 3> kernel = {
+  constexpr std::array<std::array<float, 3>, 3> kernel = {
       {{1.0f, 2.0f, 1.0f}, {2.0f, 4.0f, 2.0f}, {1.0f, 2.0f, 1.0f}}};
+
   return imgFilter<3, 3>(src, kernel);
 }
 
@@ -125,9 +115,9 @@ cv::Mat imgRobert(const cv::Mat& src) {
 cv::Mat imgSobel(const cv::Mat& src) {
   cv::Mat dst(src.rows, src.cols, CV_8UC1);
 
-  constexpr Kernel<3, 3> gx = {
+  constexpr std::array<std::array<float, 3>, 3> gx = {
       {{-1.0f, 0.0f, 1.0f}, {-2.0f, 0.0f, 2.0f}, {-1.0f, 0.0f, 1.0f}}};
-  constexpr Kernel<3, 3> gy = {
+  constexpr std::array<std::array<float, 3>, 3> gy = {
       {{-1.0f, -2.0f, -1.0f}, {0.0f, 0.0f, 0.0f}, {1.0f, 2.0f, 1.0f}}};
 
   for (int y : views::iota(0, src.rows)) {
@@ -157,7 +147,7 @@ cv::Mat imgSobel(const cv::Mat& src) {
 cv::Mat imgLaplacian(const cv::Mat& src) {
   cv::Mat dst(src.rows, src.cols, CV_8UC1);
 
-  constexpr Kernel<3, 3> kernel = {
+  constexpr std::array<std::array<float, 3>, 3> kernel = {
       {{0.0f, 1.0f, 0.0f}, {1.0f, -4.0f, 1.0f}, {0.0f, 1.0f, 0.0f}}};
 
   for (int y : views::iota(0, src.rows)) {

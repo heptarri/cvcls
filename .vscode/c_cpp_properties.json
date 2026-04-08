@@ -5,12 +5,12 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/usr/include/opencv4",
-                "${workspaceFolder}/src/common"
+                "/usr/include/eigen3"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc-14",
-            "cStandard": "c17",
-            "cppStandard": "gnu++17",
+            "cStandard": "c23",
+            "cppStandard": "gnu++23",
             "intelliSenseMode": "linux-gcc-x64",
             "compilerArgs": [
                 "-std=c++23"

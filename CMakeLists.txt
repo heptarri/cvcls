@@ -9,6 +9,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
+# Find Eigen3 (required for double_measure)
+find_package(Eigen3 REQUIRED)
+include_directories(${EIGEN3_INCLUDE_DIR})
+
 # Set output directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
@@ -31,6 +35,10 @@ add_executable(cvcls
     src/chapts/chapt4/chapt4.h
     src/chapts/chapt5/chapt5.cpp
     src/chapts/chapt5/chapt5.h
+    src/chapts/others/single_measure.cpp
+    src/chapts/others/single_measure.h
+    src/chapts/others/stereo_measure.cpp
+    src/chapts/others/stereo_measure.h
 )
 target_include_directories(cvcls PRIVATE 
     src
@@ -38,6 +46,7 @@ target_include_directories(cvcls PRIVATE
     src/chapts/chapt3
     src/chapts/chapt4
     src/chapts/chapt5
+    src/chapts/others
 )
 target_link_libraries(cvcls common ${OpenCV_LIBS})
 

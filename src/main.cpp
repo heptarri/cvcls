@@ -10,18 +10,28 @@
 #include "chapts/chapt3/chapt3.h"
 #include "chapts/chapt4/chapt4.h"
 #include "chapts/chapt5/chapt5.h"
+#include "chapts/others/single_measure.h"
+#include "chapts/others/stereo_measure.h"
 #include "common/common.h"
 
 namespace fs = std::filesystem;
 
 void printUsage(std::string_view programName) {
   std::println("Usage: {} [chapter_number]", programName);
-  std::println("  chapter_number: 2, 3, 4, 5, or 'all' (default: all)");
+  std::println(
+      "  chapter_number: 2, 3, 4, 5, measure, stereo, stereo-json, or 'all' "
+      "(default: all)");
   std::println("");
   std::println("Examples:");
-  std::println("  {}        # Run all chapters", programName);
-  std::println("  {} 2      # Run only Chapter 2", programName);
-  std::println("  {} all    # Run all chapters", programName);
+  std::println("  {}             # Run all chapters", programName);
+  std::println("  {} 2           # Run only Chapter 2", programName);
+  std::println("  {} measure     # Run single-view measurement", programName);
+  std::println("  {} stereo      # Run stereo measurement (8-point algorithm)",
+               programName);
+  std::println(
+      "  {} stereo-json # Run stereo using points.json (bypass GUI issues)",
+      programName);
+  std::println("  {} all         # Run all chapters", programName);
 }
 
 int main(int argc, char* argv[]) {
@@ -85,19 +95,41 @@ int main(int argc, char* argv[]) {
          runChapt4(rgbImage, outputRootStr);
          std::println("[CHPT] Chapter 4 Generated!");
        }},
-      {"5", [&rgbImage, &outputRootStr]() {
+      {"5",
+       [&rgbImage, &outputRootStr]() {
          std::println("\n========== Running Chapter 5 ==========");
          const cv::Mat grayImage = toGrayscale(rgbImage);
          runChapt5(grayImage, outputRootStr);
          std::println("[CHPT] Chapter 5 Generated!");
-       }}};
+       }},
+      {"measure",
+       [&rgbImage]() {
+         std::println(
+             "\n========== Running Single-View Measurement ==========");
+         SingleMeasure::runSingleMeasure(rgbImage);
+         std::println("[CHPT] Measurement Complete!");
+       }},
+      {"stereo",
+       []() {
+         std::println(
+             "\n========== Running Stereo Measurement (8-Point Algorithm) "
+             "==========");
+         const std::string leftPath =
+             "/home/hepcl/workspace/cvcls/static/left.png";
+         const std::string rightPath =
+             "/home/hepcl/workspace/cvcls/static/right.png";
+         StereoMeasure::runStereoMeasure(leftPath, rightPath);
+         std::println("[CHPT] Stereo Measurement Complete!");
+       }},
+  };
 
   // 运行相应的章节
   const bool runAll = (chapterArg == "all");
 
   if (runAll) {
     // 运行所有章节（按顺序）
-    const std::array<std::string_view, 4> order = {"2", "3", "4", "5"};
+    const std::array<std::string_view, 6> order = {"2", "3",       "4",
+                                                   "5", "measure", "stereo"};
     for (const auto& chapter : order) {
       if (auto it = chapters.find(chapter); it != chapters.end()) {
         it->second();
