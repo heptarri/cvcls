@@ -102,7 +102,16 @@ cv::Mat genGammaTrans(const cv::Mat& src, float gamma) {
   return dst;
 }
 
-// 手动计算 Otsu 阈值
+/**
+ * 手动计算 Otsu 阈值
+ *
+ * wF: 前景像素占比
+ * wB: 背景像素占比
+ * mF: 前景像素平均灰度
+ * mB: 背景像素平均灰度
+ * varBetween: 类间方差 = wF * wB * (mF - mB)^2
+ * 目的是让 varBetween 最大化，从而找到最佳的分割阈值
+ */
 uint8_t otsuThreshold(const cv::Mat& gray) {
   const auto hist = calculateHistogram(gray);
   uint32_t total = 0;
@@ -158,7 +167,17 @@ cv::Mat genThreshold(const cv::Mat& src, uint8_t thresh, uint8_t typeFlag) {
   return dst;
 }
 
-// 分段线性灰度映射
+/**
+ * 分段线性灰度映射
+ *
+ * s={
+ *  (s1/r1)*r, r<r1
+ *  s1+((s2-s1)/(r2-r1))*(r-r1), r1<=r<r2
+ *  s2+((255-s2)/(255-r2))*(r-r2), r>=r2
+ * }
+ *
+ * LUT 查表
+ **/
 cv::Mat genPiecewiseLin(const cv::Mat& src, uint8_t r1, uint8_t s1, uint8_t r2,
                         uint8_t s2) {
   std::array<uint8_t, 256> lut;
@@ -187,7 +206,12 @@ cv::Mat genPiecewiseLin(const cv::Mat& src, uint8_t r1, uint8_t s1, uint8_t r2,
   return dst;
 }
 
-// 直方图均衡化
+/**
+ * 直方图均衡化
+ *
+ * cdf = \sigma hist[i]
+ * s = round((cdf - cdf_min) / (total_px - cdf_min) * 255)
+ */
 cv::Mat genEqualizeHist(const cv::Mat& src) {
   cv::Mat gray = toGrayscale(src);
   auto hist = calculateHistogram(gray);

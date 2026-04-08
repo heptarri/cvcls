@@ -12,19 +12,6 @@ namespace views = std::views;
 template <int H, int W>
 using Kernel = std::array<std::array<float, W>, H>;
 
-// 计算 kernel 权重和的 constexpr 函数
-template <int H, int W>
-constexpr float kernelSum(const Kernel<H, W>& kernel) {
-  float sum = 0.0f;
-  for (const auto& row : kernel) {
-    for (const auto val : row) {
-      sum += val;
-    }
-  }
-  return sum;
-}
-
-// 通用图像滤波器（使用 std::array 代替 C 数组）
 template <int H, int W>
 cv::Mat imgFilter(const cv::Mat& src, const Kernel<H, W>& mask) {
   cv::Mat dst(src.rows, src.cols, CV_8UC1);

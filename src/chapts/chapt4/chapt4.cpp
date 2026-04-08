@@ -74,7 +74,17 @@ cv::Mat imgResizeNearest(const cv::Mat& src, int w, int h) {
   return dst;
 }
 
-// 双线性插值缩放
+/**
+ * 双线性插值缩放
+ *
+ * (x0,y0)=floor(fx,fy)
+ * (dx,dy)=(fx,fy)-(x0,y0)
+ *
+ * p00=src[y0,x0], p10=src[y0,x1], p01=src[y1,x0], p11=src[y1,x1]
+ * p0=p00+(p10-p00)*dx
+ * p1=p01+(p11-p01)*dx
+ * p=p0+(p1-p0)*dy
+ */
 cv::Mat imgResizeBilinear(const cv::Mat& src, int w, int h) {
   cv::Mat dst(h, w, src.type());
   float sw = static_cast<float>(src.cols);
@@ -117,7 +127,13 @@ cv::Mat imgResizeBilinear(const cv::Mat& src, int w, int h) {
   return dst;
 }
 
-// Catmull-Rom 权重函数
+/**
+ * 求 Catmull-Rom 权重函数
+ *
+ * w(t) = 1.5|t|^3 - 2.5|t|^2 + 1, |t| <= 1
+ * w(t) = -0.5|t|^3 + 2.5|t|^2 - 4|t| + 2, 1 < |t| < 2
+ * w(t) = 0, |t| >= 2
+ */
 float cubicWeight(float t) {
   const float a = -0.5f;
   t = std::abs(t);
@@ -130,7 +146,11 @@ float cubicWeight(float t) {
   }
 }
 
-// 三次插值缩放（Catmull-Rom）
+/**
+ * 三次插值缩放（Catmull-Rom）
+ *
+ * p = sum{i=-1..2, j=-1..2} src[y0+j, x0+i] * w(dx-i) * w(dy-j)
+ */
 cv::Mat imgResizeCubic(const cv::Mat& src, int w, int h) {
   cv::Mat dst(h, w, src.type());
   float sw = static_cast<float>(src.cols);
@@ -176,6 +196,22 @@ cv::Mat imgResizeCubic(const cv::Mat& src, int w, int h) {
 cv::Mat imgResize(const cv::Mat& src, int w, int h) {
   return imgResizeNearest(src, w, h);
 }
+
+/**
+ * 旋转矩阵:
+ * [x']   [ cosA  sinA] [x]
+ * [y'] = [-sinA  cosA] [y]
+ *
+ * x' = cosA * x + sinA * y
+ * y' = -sinA * x + cosA * y
+ *
+ * 逆变换：
+ * [x]   [ cosA -sinA] [x' - cx] + [cx]
+ * [y] = [ sinA  cosA] [y' - cy] + [cy]
+ *
+ * x = cosA * (x'-cx) - sinA * (y'-cy) + cx
+ * y = sinA * (x'-cx) + cosA * (y'-cy) + cy
+ */
 
 // 最近邻插值旋转
 cv::Mat imgRotateNearest(const cv::Mat& src, float angleDeg) {
